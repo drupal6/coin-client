@@ -97,13 +97,12 @@ class Config:
 
 if __name__ == '__main__':
     config = Config()
-    pass
-    # make_zip(config)
-    # print("压缩完毕")
-    #
-    # s = open_ssh(config)
-    # ssh_put(s, config)
-    # cmd = "cd %s; unzip -o %s;" %(config.remove_path, config.zipfilename)
-    # ssh_cmd(s, cmd)
-    # close_ssh(s)
-    # print("推送完毕")
+    make_zip(config)
+    print("压缩完毕")
+
+    s = open_ssh(config)
+    ssh_put(s, config)
+    cmd = "cd %s; unzip -o %s;" %(config.remove_path, config.zipfilename)
+    ssh_cmd(s, cmd)
+    close_ssh(s)
+    print("推送完毕")

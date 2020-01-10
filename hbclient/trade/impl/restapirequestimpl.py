@@ -65,12 +65,13 @@ class RestApiRequestImpl(object):
         request = self.__create_request_by_get("/market/history/kline", builder)
 
         def parse(json_wrapper):
-            candlestick_list = list()
-            data_list = json_wrapper.get_array("data")
-            for item in data_list.get_items():
-                candlestick = Candlestick.json_parse(item)
-                candlestick_list.append(candlestick)
-            return candlestick_list
+            # candlestick_list = list()
+            # data_list = json_wrapper.get_array("data")
+            # for item in data_list.get_items():
+            #     candlestick = Candlestick.json_parse(item)
+            #     candlestick_list.append(candlestick)
+            # return candlestick_list
+            return json_wrapper.json_object["data"]
 
         request.json_parser = parse
         return request
