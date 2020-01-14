@@ -7,6 +7,7 @@ import talib
 from datetime import datetime
 import logging
 from utils.utility import *
+from hbclient.hbdm.HuobiDMService import HuobiDM
 
 class BollbandStrategy(object):
     """
@@ -17,11 +18,9 @@ class BollbandStrategy(object):
 
     variables = ["strategy_pos", 'boll_up', 'boll_dn', 'boll_mid']  #
 
-    def __init__(self, req_client: RequestClient, sub_client: SubscriptionClient, symbol='btcusdt', file_name=None):
-
-        self.req_client = req_client
-        self.sub_client = sub_client
+    def __init__(self, symbol='BCH_CW', interval=CandlestickInterval.MIN1, file_name=None):
         self.symbol = symbol
+        self.interval = interval
 
         self.file_name = file_name if file_name else self.__class__.__name__
         self.json_data = load_json(self.file_name)
