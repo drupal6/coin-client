@@ -2,6 +2,7 @@ from hbclient.trade.model.constant import CandlestickInterval
 from hbclient.hbdm.rest.HuobiDMService import HuobiDM
 from hbclient.trade.exception.huobiapiexception import HuobiApiException
 import pandas as pd
+from utils.klineutils import *
 pd.set_option("expand_frame_repr", False)
 import talib
 from datetime import datetime
@@ -10,7 +11,7 @@ from utils.utility import *
 from pprint import pprint
 
 
-class BollbandStrategy(object):
+class MaStrategy(object):
     """
     策略思路，盘中价格向上突破上轨就会做多, 在多头的情况下，价格跌破中轨轨就会平多头.
             盘中价格跌破下轨就做空，在空头持仓情况下，价格突破中轨就平掉空头.
@@ -58,15 +59,10 @@ class BollbandStrategy(object):
         if not self.klines:
             raise HuobiApiException(HuobiApiException.INPUT_ERROR, "klines is not init")
         new_klines = self.req_client.get_contract_kline(symbol=self.symbol, period=self.interval, size=2)["data"]
-        if new_klines[-1]["id"] == self.klines[-1]["id"]:
-            self.klines[-1] = new_klines[-1]
-        elif new_klines[-2]["id"] == self.klines[-1]["id"]:
-            self.klines[-1] = new_klines[-2]
-            self.klines.append(new_klines[-1])
-            if len(self.klines) > self.size:
-                self.klines.pop(0)
-        else:
-            raise HuobiApiException(HuobiApiException.INPUT_ERROR, "update klines error")
+        update_klines(self.klines, new_klines, self.size)
+        interval_datas = interval_handler(self.klines)
+        pprint(interval_datas)
+
 
     def on_1hour_kline_data(self, symbol, interval=CandlestickInterval.MIN60):
         """

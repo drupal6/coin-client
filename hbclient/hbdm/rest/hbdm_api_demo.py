@@ -6,11 +6,11 @@ Created on Mon Sep 17 15:48:13 2018
 @author: zhaobo
 """
 
-from hbclient.hbdm.HuobiDMService import HuobiDM
+from hbclient.hbdm.rest.HuobiDMService import HuobiDM
 from pprint import pprint
 
 #### input huobi dm url
-URL = ''
+URL = 'https://api.btcgateway.pro'
 
 ####  input your access_key and secret_key below:
 ACCESS_KEY = ''

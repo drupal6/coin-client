@@ -1,6 +1,6 @@
 from hbclient.trade.model.constant import CandlestickInterval
 from hbclient.trade.exception.huobiapiexception import HuobiApiException
-from strategies.BollbandStrategy import BollbandStrategy
+from strategies.MaStrategy import MaStrategy
 from hbclient.hbdm.rest.HuobiDMService import HuobiDM
 import json
 from apscheduler.schedulers.background import BackgroundScheduler
@@ -24,10 +24,10 @@ if __name__ == '__main__':
     size = 500
     req_client = HuobiDM(url=url, access_key=key, secret_key=secret)
 
-    double_ema_strategy = BollbandStrategy(req_client, symbol, CandlestickInterval.MIN1, size)
+    ma_strategy = MaStrategy(req_client, symbol, CandlestickInterval.MIN1, size)
 
     scheduler = BackgroundScheduler()
-    scheduler.add_job(double_ema_strategy.update_kline, trigger='cron', args=(), second='*/10')
+    scheduler.add_job(ma_strategy.update_kline, trigger='cron', args=(), second='*/10')
 
     scheduler.start()
 

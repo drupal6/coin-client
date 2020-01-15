@@ -4,7 +4,7 @@
 # @Author  : zhaobo
 # @github  : 
 
-from hbclient.hbdm.HuobiDMUtil import http_get_request, api_key_post
+from hbclient.hbdm.rest.HuobiDMUtil import http_get_request, api_key_post
 
 class HuobiDM:
 
