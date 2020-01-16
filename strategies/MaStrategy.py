@@ -61,7 +61,7 @@ class MaStrategy(object):
         new_klines = self.req_client.get_contract_kline(symbol=self.symbol, period=self.interval, size=2)["data"]
         update_klines(self.klines, new_klines, self.size)
         interval_datas = interval_handler(self.klines)
-        pprint(interval_datas)
+        print(interval_datas[5][0], interval_datas[10][0], interval_datas[30][0])
 
 
     def on_1hour_kline_data(self, symbol, interval=CandlestickInterval.MIN60):

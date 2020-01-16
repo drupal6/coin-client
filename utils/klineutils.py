@@ -28,15 +28,16 @@ def interval_handler(values, periods=[5, 10, 30], vtype="close"):
     value_size = len(values)
     for period in periods:
         ret[period] = list()
-    while index < value_size:
+    temp_index = value_size - 1
+    while temp_index >= 0:
         for period in periods:
+            if temp_index - period < 0:
+                break
             template_values[period] = 0
             for p in range(0, period):
-                if index + p > value_size - 1:
-                    break
-                template_values[period] += values[index + p][vtype]
+                template_values[period] += values[temp_index - p][vtype]
             ret[period].append(template_values[period]/period)
-        index += 1
+        temp_index -= 1
     return ret
 
 
